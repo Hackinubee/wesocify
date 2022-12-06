@@ -1,0 +1,34 @@
+{% extends 'wrapper.html' %}
+{% load widget_tweaks humanize static %}
+{% block content %}
+<section class="container sidebar-boxed">
+<div class="row justify-center py-3">
+<div class="col-sm-12 col-md-12 col-lg-7 col-xl-7">
+<div class="feed-container">
+{% include 'feed/partials/create.html' %}
+{% include 'feed/partials/preview.html' %}
+<div id="feed-container">
+{% include 'feed/feeds.html' %}
+</div>
+</div>
+</div>
+
+<div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 is-hidden-mobile">
+<div class="profile-sidebar">
+<div class="ui-block p-3">
+<h6> Suggestions </h6>
+</div>
+
+<div class="footer-sidebar">
+<a href="{% url 'core:terms' %}" class="footer-item">Terms of Service</a>
+<a href="{% url 'core:privacy' %}" class="footer-item">Privacy Policy</a>
+<a href="" class="footer-item">Help</a>
+<a href="" class="footer-item">Cookie Policy</a>
+<a class="footer-item">© {% now "Y" %} WeSocify</a>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+{% endblock %}
