@@ -18,7 +18,7 @@ SECRET_KEY = 'django-insecure-74nl3==(nse!l8a@26m=2^+e27^gn@zqns@1q9_)2%(9h2w!we
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['wesocify.bytecodevision.tech', 'localhost']
 APPEND_SLASH = False
 
 # Application definition
@@ -132,8 +132,8 @@ MAX_UPLOAD_SIZE = "1048576"
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
