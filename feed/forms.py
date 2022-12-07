@@ -13,8 +13,8 @@ class postForm(forms.ModelForm):
 		fields = ('text',)
 		
 class pollForm(forms.ModelForm):
-  choice_1 = forms.CharField(max_length=25)
-  choice_2 = forms.CharField(max_length=25)
+  choice_1 = forms.CharField(max_length=25, required=False)
+  choice_2 = forms.CharField(max_length=25, required=False)
   choice_3 = forms.CharField(max_length=25, required=False)
   choice_4 = forms.CharField(max_length=25, required=False)
   #poll_days = forms.ChoiceField()

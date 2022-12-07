@@ -113,23 +113,23 @@ class FeedView():
             form = postForm(request.POST or None, request.FILES or None)
             poll = pollForm(request.POST or None)
             images = request.FILES.getlist('image')
-            is_poll = request.POST.get('poll', 0)
+            action = request.POST.get('action', 0)
+
             if form.is_valid():
                 username = request.user.username
                 user_id = request.user.id
                 text = form.cleaned_data['text']
                 feed = Feed.objects.create(user_id=user_id, username=username, text=text)
-                if int(is_poll) == 1:
-                  if poll.is_valid():
-                    choice_1 = poll.cleaned_data['choice_1']
-                    choice_2 = poll.cleaned_data['choice_2']
-                    choice_3 = poll.cleaned_data['choice_3']
-                    choice_4 = poll.cleaned_data['choice_4']
-                    #days = poll.cleaned_data['poll_days']
-                    #hours = poll.cleaned_data['poll_hours']
-                    #minutes = poll.cleaned_data['poll_minutes']
-                    feed_poll = FeedPoll.objects.create(feed=feed, choice_1=choice_1, choice_2=choice_2, choice_3=choice_3, choice_4=choice_4)
-                    feed_poll.save()
+                if poll.is_valid():
+                  choice_1 = poll.cleaned_data['choice_1']
+                  choice_2 = poll.cleaned_data['choice_2']
+                  choice_3 = poll.cleaned_data['choice_3']
+                  choice_4 = poll.cleaned_data['choice_4']
+                  #days = poll.cleaned_data['poll_days']
+                  #hours = poll.cleaned_data['poll_hours']
+                  #minutes = poll.cleaned_data['poll_minutes']
+                  feed_poll = FeedPoll.objects.create(feed=feed, choice_1=choice_1, choice_2=choice_2, choice_3=choice_3, choice_4=choice_4)
+                  feed_poll.save()
                 for image in images:
                   feed_images = FeedImages.objects.create(feed=feed, image=image)
                   feed_images.save()
@@ -137,11 +137,14 @@ class FeedView():
                 data = {
                     'post': feed,
                 }
-                return render(request, 'feed/partials/feed.html', data)
+                if int(action) == 1:
+                  return JsonResponse({'status': 200, 'message': 'Your feed has been posted.'})
+                else:
+                  return render(request, 'feed/partials/feed.html', data)
             else:
-                return JsonResponse({'scode': 403, 'message': 'Invalid form'}, status=403)
+                return JsonResponse({'status': 403, 'message': 'Invalid form'}, status=403)
         else:
-            return JsonResponse({'scode': 403, 'message': 'Not Allowed'}, status=403)
+            return JsonResponse({'status': 403, 'message': 'Not Allowed'}, status=403)
 
     @login_required
     def update(request):
