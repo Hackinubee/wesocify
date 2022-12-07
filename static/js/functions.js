@@ -142,6 +142,58 @@ $(document).ready(function () {
     $('main#content').on('click', '.create-poll-content .button.poll-add-field', function () {
       $('.create-poll-content .poll-field.optional-fields').toggleClass('is-active')
     })
+
+  $('#publish-button').on('click', function (e) {
+    e.preventDefault()
+    const data = new FormData()
+    const token = $('body').data('token')
+    const action = $(this).attr('action')
+    const text = $('#text').val()
+    const poll = $(this).children('.create-poll-wrapper')
+    const choice_1 = $('.create-poll-wrapper .create-poll-content .poll-field').find('#id_choice_1').val()
+    const choice_2 = $('.create-poll-wrapper .create-poll-content .poll-field').find('#id_choice_2').val()
+    const choice_3 = $('.create-poll-wrapper .create-poll-content .poll-field').find('#id_choice_3').val()
+    const choice_4 = $('.create-poll-wrapper .create-poll-content .poll-field').find('#id_choice_4').val()
+    const image_field = document.querySelector('#photo_field').files[0]
+    data.append('action', 1)
+    data.append('text', text)
+    if(poll.hasClass('is-active')) {
+    $('#id_choice_1, #id_choice_2').attr('required', true)
+    }
+    else {
+    $('#id_choice_1, #id_choice_2').attr('required', false)
+    }
+    if(poll.hasClass('is-active') && !choice_1 && !choice_2) {
+    data.append('choice_1', choice_1)
+    data.append('choice_2', choice_2)
+    }
+    else if(poll.hasClass('is-active') && !choice_3 && !choice_4) {
+    data.append('choice_3', choice_3)
+    data.append('choice_4', choice_4)
+    }
+    data.append('image', image_field)
+    fetch(action, {
+      method: 'POST',
+      body: data,
+      credentials: 'same-origin',
+      headers: {
+        Accept: 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRFToken': token
+      }
+    })
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        if (data.status == 200) {
+          $(this).trigger('reset')
+          alert(data.message)
+        } else {
+          alert('An error occurred!')
+        }
+      })
+  })
 })
 /* --------------------------
    * End * Publish Feed
