@@ -20,10 +20,8 @@
 
 <div class="tab-content">
 <div class="tab-pane active">
-<form method="POST" enctype="multipart/form-data" hx-post="{% url 'feed:post' %}" hx-encoding="multipart/form-data" hx-vals='{"poll": 1}'>
-{% csrf_token %}
 <div class="message-form-inner py-4">
-{% render_field post_form.text class="message-form" placeholder="Whats new?" id="publish" %}
+{% render_field post_form.text class="message-form" placeholder="Whats new?" id="text" %}
 <div class="create-poll-wrapper">
 <div class="create-poll-content">
 <div class="poll-field">
@@ -148,12 +146,11 @@
 </div>
 
 <div class="add-option-buttons is-publish-button">
-<button type="submit" class="publish-button" id="publish-button">Post</button>
+<button type="submit" class="publish-button" id="publish-button" action="{% url 'feed:post' %}">Post</button>
 </div>
 
 <input class="hidden" type="file" name="image" id="photo_field" multiple>
 </div>
-</form>
 </div>
 
 </div>
